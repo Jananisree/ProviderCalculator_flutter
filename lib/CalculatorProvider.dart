@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class CalculatorProvider extends ChangeNotifier {
-  String _expression = ''; // Stores the input expression
-  String _display = ''; // Stores the current display (result or expression)
-  String _lastResult = ''; // Stores the result of the last calculation
-  bool _isResultShown = false; // Tracks whether the result is shown
+  String _expression = '';
+  String _display = '';
+  String _lastResult = '';
+  bool _isResultShown = false;
 
-  // Getter for the expression
+
   String get expression => _expression;
 
-  // Getter for the display (result or current input)
+
   String get display => _display;
 
-  /// Handles user input.
   void input(String value) {
     if (_isResultShown) {
-      _expression = ''; // Clear expression if result was shown
+      _expression = '';
       _isResultShown = false;
     }
-    _expression += value; // Add input to expression
-    _display = _expression; // Update display with current input
+    _expression += value;
+    _display = _expression;
     notifyListeners();
   }
 
-  /// Calculates the result of the expression.
   void calculate() {
     try {
       String finalExpression = _prepareExpression(_expression);
@@ -34,20 +32,19 @@ class CalculatorProvider extends ChangeNotifier {
 
       num result = expression.evaluate(EvaluationType.REAL, contextModel);
 
-      // Format the result: If integer, remove decimal part
+
       _lastResult = (result % 1 == 0)
           ? result.toInt().toString()
           : result.toStringAsFixed(6).replaceAll(RegExp(r'0+$'), '');
 
-      _display = _lastResult; // Show the result
-      _isResultShown = true; // Mark that the result is shown
+      _display = _lastResult;
+      _isResultShown = true;
     } catch (e) {
-      _display = 'Error'; // Show error if parsing fails
+      _display = 'Error';
     }
     notifyListeners();
   }
 
-  /// Prepares the expression by handling special cases like percentage.
   String _prepareExpression(String expression) {
     String processedExpression = expression
         .replaceAll('×', '*')
@@ -62,7 +59,6 @@ class CalculatorProvider extends ChangeNotifier {
     return processedExpression;
   }
 
-  /// Clears all input and resets the state.
   void clearAll() {
     _expression = '';
     _display = '';
@@ -71,7 +67,6 @@ class CalculatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Deletes the last character from the expression.
   void backspace() {
     if (_expression.isNotEmpty && !_isResultShown) {
       _expression = _expression.substring(0, _expression.length - 1);

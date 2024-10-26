@@ -27,7 +27,6 @@ class CalculatorScreen extends StatelessWidget {
         builder: (context, constraints) {
           return Column(
             children: [
-              // Display Section: Expression (Smaller) and Result (Larger)
               Container(
                 height: availableHeight * 0.33,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -38,7 +37,7 @@ class CalculatorScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Expression Text (Small)
+
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           reverse: true,
@@ -50,10 +49,9 @@ class CalculatorScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 8.0), // Space between expression and result
-                        // Result Text (Large and Bold)
+                        const SizedBox(height: 8.0),
                         Text(
-                          calculator.display, // Calculation result
+                          calculator.display,
                           style: TextStyle(
                             fontSize: constraints.maxHeight * 0.06,
                             fontWeight: FontWeight.bold,
@@ -64,7 +62,6 @@ class CalculatorScreen extends StatelessWidget {
                   },
                 ),
               ),
-              // Expanded GridView Section for Buttons
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -94,7 +91,6 @@ class CalculatorScreen extends StatelessWidget {
     '.', '0', '00', '=',
   ];
 
-  // Builds a single button widget
   Widget buildButton(String label, BuildContext context) {
     bool isTopRow = ['C', '⌫', '%','÷', '×'].contains(label);
     bool isLastColumn = ['-', '+', '=', ')'].contains(label);
